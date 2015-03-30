@@ -16,8 +16,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
+import Sites.secrets
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'xp0tkmlv1dw9l8+8hr*xvi)@%)^!-)vs(mppt!qdb_*w$o7gtp'
+SECRET_KEY = Sites.secrets.SECRET_KEY_sites
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -63,8 +65,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'PaleoSites',
-        'USER': 'surf3s',
-        'PASSWORD': 'Atak2015!',
+        'USER': Sites.secrets.User_sites,
+        'PASSWORD': Sites.secrets.Password_sites,
         'PORT': '5433',   # default Postgres por
     }
 }
