@@ -63,8 +63,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'PaleoSites',
-        'USER': '',
-        'PASSWORD': '',
+        'USER': 'surf3s',
+        'PASSWORD': 'Atak2015!',
         'PORT': '5433',   # default Postgres por
     }
 }
@@ -89,11 +89,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'Collected_static'),)
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR,  'templates'),
+    os.path.join(BASE_DIR,  'Templates'),
 )
 
 FIXTURE_DIRS = (
-    os.path.join(BASE_DIR,  'fixtures'),
+    os.path.join(BASE_DIR,  'Fixtures'),
 )

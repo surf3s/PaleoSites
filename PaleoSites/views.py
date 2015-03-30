@@ -9,9 +9,10 @@ import csv
 def home(request):
     sites = Site.objects.all().count
     dates = Date.objects.all().count
+    debug_message = ''
     if request.method == 'GET':
-        if request.GET.get('sitename',''):
-            points_to_map = Site.objects.filter(site__exact=request.GET.get('sitename',''))
+        if request.GET.get('id',''):
+            points_to_map = Site.objects.filter(id__exact=request.GET.get('id',''))
             search_result = True
             search_result_n = 1
             form = SiteSearch
@@ -86,9 +87,12 @@ def home(request):
         form = SiteSearch(request.POST)
         if form.is_valid():
             form_data = form.cleaned_data
-            points_to_map = Site.objects.filter(site__contains=form_data['site_name'])
+            points_to_map = Site.objects.filter(site__icontains=form_data['site_name'])
             search_result = True
             search_result_n = points_to_map.count()
+            if search_result_n==0:
+                points_to_map = Site.objects.all()
+                form = SiteSearch
         else:
             points_to_map = Site.objects.all()
             form = SiteSearch
@@ -98,7 +102,7 @@ def home(request):
         form = SiteSearch
         search_result = False
         search_result_n = 0
-    return render(request,'index.html',{'sites': sites,'dates': dates,'map_points' : points_to_map, 'form': form, 'search_result': search_result, 'search_result_n': search_result_n,})
+    return render(request,'index.html',{'sites': sites,'dates': dates,'map_points' : points_to_map, 'form': form, 'search_result': search_result, 'search_result_n': search_result_n, 'debug_message': debug_message})
 
 def all_kml(request):
     locations = Site.objects.kml()

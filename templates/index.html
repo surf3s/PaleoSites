@@ -50,9 +50,12 @@
 </div>
 </div>
 <div id="column1">
-<p><a href="http://127.0.0.1:8000/admin/GIS/site/">{{ sites }} site records</a>.<br>
-   <a href="http://127.0.0.1:8000/admin/GIS/date/"> {{ dates }} date records</a>.</p>
-    <p></p>Goto database <a href="http://127.0.0.1:8000/admin">Admin</a></p>
+    {%  if debug_message %}
+        <p>'{{ debug_message }}'</p>
+    {% endif %}
+<p><a href="admin/PaleoSites/site/">{{ sites }} site records</a>.<br>
+   <a href="admin/PaleoSites/date/"> {{ dates }} date records</a>.</p>
+    <p></p>Goto database <a href="admin">Admin</a></p>
     <br><p>Download:</p>
     <ul><li>SQLite database</li>
     <li><a href="index.html?download=sites">Sites as CSV</a></li>
@@ -84,15 +87,17 @@
                 Country :  {{  a_site.country.name }}<br>
                 Data Source :  {{  a_site.data_source }}<br>
                 <br>
-                <a href="/admin/GIS/site/{{ a_site.id }}/">Edit this record</a>
+                <a href="/admin/PaleoSites/site/{{ a_site.id }}/">Edit this record</a>
             {% endfor %}
         {% else %}
             {{ search_result_n }} matches
-            {% for a_site in map_points %}
-                {% if a_site.map_location %}
-                    <p><a href="/index.html?sitename={{ a_site.site}}">{{ a_site.site }}</a></p>
-                {%  endif %}
-            {% endfor %}
+            {%  if search_result_n > 0  %}
+                {% for a_site in map_points %}
+                    {% if a_site.map_location %}
+                        <p><a href="/index.html?id={{ a_site.id }}">{{ a_site.site }}</a></p>
+                    {%  endif %}
+                {% endfor %}
+            {% endif %}
         {% endif %}
     </div>
 {%   else %}
